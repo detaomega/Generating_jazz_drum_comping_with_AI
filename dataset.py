@@ -1,5 +1,4 @@
 from typing import Dict
-from mido import KeySignatureError
 import pretty_midi
 import numpy as np
 
@@ -59,41 +58,37 @@ def my_get_piano_roll(self, fs=100, times=None,
             piano_roll_integrated[:, n] = np.mean(piano_roll[:, start:end], axis=1)
     return piano_roll_integrated
 
-stream = pretty_midi.PrettyMIDI('fly_me_to_the_moon-Frank-Sinatra-kar_mm.mid')
-
-
+version = 1
+stream = pretty_midi.PrettyMIDI('test/midi/fly_me_to_the_moon-Frank-Sinatra-kar_mm.mid')
+bpm = stream.estimate_tempo()
+fs = (bpm * 128) / 60
 # find the max column in instruments
 max_col = -1
 for i in range(len(stream.instruments)):
-    row, col = my_get_piano_roll(stream.instruments[i]).shape
+    piano_roll = my_get_piano_roll(stream.instruments[i], fs)
+    row, col = piano_roll.shape
     max_col = max(max_col, col)
 
-# version 1
-not_drum_instruments_v1 = np.zeros((128, max_col))
-drum_instruments_v1 = np.zeros((128, max_col))
+# version 1 (row: instrument, col: time, velocity is added together)
+not_drum_instruments = np.zeros((128, max_col))
+drum_instruments = np.zeros((128, max_col))
 
 for i in range(len(stream.instruments)):
-    row, col = my_get_piano_roll(stream.instruments[i]).shape
+    piano_roll = my_get_piano_roll(stream.instruments[i], fs)
+    row, col = piano_roll.shape
     if stream.instruments[i].is_drum == False:
-        tem = np.hstack((my_get_piano_roll(stream.instruments[i]), np.zeros((128, max_col - col))))
-        not_drum_instruments_v1 += tem
+        tem = np.hstack((piano_roll, np.zeros((128, max_col - col))))
+        not_drum_instruments += tem
     else :
-        tem = np.hstack((my_get_piano_roll(stream.instruments[i]), np.zeros((128, max_col - col))))
-        drum_instruments_v1 += tem
+        tem = np.hstack((piano_roll, np.zeros((128, max_col - col))))
+        drum_instruments += tem
 
-# version 2
-drum_instruments_v2 = np.zeros((128, max_col))
+# version 2 (row: time, col: instrument, changed to zeros and ones)
+if version == 2:
+    drum_instruments = np.where(drum_instruments > 0, 1, 0)
+    drum_instruments = drum_instruments.transpose()
 
-for i in range(len(stream.instruments)):
-    row, col = my_get_piano_roll(stream.instruments[i]).shape
-    if stream.instruments[i].is_drum:
-        tem = np.hstack((my_get_piano_roll(stream.instruments[i]), np.zeros((128, max_col - col))))
-        drum_instruments_v2 += tem
-
-drum_instruments_v2 = np.where(drum_instruments_v2 > 0, 1, 0)
-drum_instruments_v2 = drum_instruments_v2.transpose()
-
-for row in drum_instruments_v2:
+for row in drum_instruments:
     for i in row:
         print(i, end=' ')
     print("")
