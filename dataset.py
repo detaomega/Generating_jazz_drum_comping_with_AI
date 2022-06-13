@@ -87,5 +87,6 @@ def midi_to_piano_roll(filename, version=1):
     if version == 2:
         drum_instruments = np.where(drum_instruments > 0, 1, 0)
         drum_instruments = drum_instruments.transpose()
-
+        not_drum_instruments = not_drum_instruments.transpose()
+        
     return not_drum_instruments, drum_instruments
