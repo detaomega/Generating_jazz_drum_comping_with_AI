@@ -66,7 +66,7 @@ for i in range(128):
     if i == 36:
         for j in range(len(Y[0])):
             drum[i][j] = Y[0][j]
-    elif i == 40:
+    elif i == 38:
         for j in range(len(Y[1])):
             drum[i][j] = Y[1][j] #把大鼓跟小鼓貼回原本的檔案
 drum = np.where(drum > 0, 80, 0)

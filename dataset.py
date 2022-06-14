@@ -109,7 +109,7 @@ def prepare(path):
         drum = drum.transpose()
         tmp = []
         for i in range(drum.shape[0]):
-            if i == 36 or i == 40:
+            if i == 36 or i == 38:
                 tmp.append(drum[i])
         drum = np.array(tmp)
         drum = drum.transpose()
