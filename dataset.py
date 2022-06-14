@@ -102,6 +102,8 @@ def prepare(path):
     filelist = glob.glob(path + '/*.mid')
     for file in filelist:
         notdrum, drum = midi_to_piano_roll(file, version=2)
+        if drum.sum() == 0:
+            continue
         roll_length = drum.shape[0]
         drum = drum.transpose()
         tmp = []
