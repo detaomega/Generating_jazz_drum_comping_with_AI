@@ -60,16 +60,16 @@ for row in Y:
         else:
             i += 1 #將一些空格填滿
 
-Y = np.where(Y > 0, 60, 0)
+
 drum = drum.transpose()
 for i in range(128):
     if i == 36:
         for j in range(len(Y[0])):
             drum[i][j] = Y[0][j]
-    elif i == 38:
+    elif i == 40:
         for j in range(len(Y[1])):
             drum[i][j] = Y[1][j] #把大鼓跟小鼓貼回原本的檔案
-
+drum = np.where(drum > 0, 80, 0)
 bpm = stream.estimate_tempo()
 newdrum = dataset.piano_roll_to_instrument(drum, fs=(bpm * 128) / 60)
 newdrum.is_drum = True

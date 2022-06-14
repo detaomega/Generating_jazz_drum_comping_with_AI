@@ -101,6 +101,7 @@ def prepare(path):
     Y = []
     filelist = glob.glob(path + '/*.mid')
     for file in filelist:
+        print(file)
         notdrum, drum = midi_to_piano_roll(file, version=2)
         if drum.sum() == 0:
             continue
@@ -108,7 +109,7 @@ def prepare(path):
         drum = drum.transpose()
         tmp = []
         for i in range(drum.shape[0]):
-            if i == 36 or i == 38:
+            if i == 36 or i == 40:
                 tmp.append(drum[i])
         drum = np.array(tmp)
         drum = drum.transpose()
