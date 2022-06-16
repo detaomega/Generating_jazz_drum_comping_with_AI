@@ -13,3 +13,6 @@ Convolutional Neural Network(CNN)
 ## Main approach
 Recurrent Neural Network(RNN)
 ## Result
+![image](https://user-images.githubusercontent.com/79638758/174083949-9e00a4c9-78ba-44e0-a39b-060d322866e3.png)
+
+![image](https://user-images.githubusercontent.com/79638758/174084054-76e990ff-b9a9-4dee-8d0e-27cb6fbdf96f.png)
