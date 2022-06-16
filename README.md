@@ -43,3 +43,6 @@ there are two type that can choose to train
 3. [Song3](https://youtu.be/QsbxA_S1VdY)
 4. [Song4](https://youtu.be/-_DVaZJHcNA)
 5. [Song5](https://youtu.be/2Cay9RrQwsw)
+
+* For comparison, these are the original songs
+  [Link](https://github.com/detaomega/Generating_jazz_drum_comping_with_AI/tree/main/sample/NoDrum%20)
