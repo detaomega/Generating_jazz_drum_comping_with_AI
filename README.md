@@ -3,4 +3,4 @@
 ## Introduction
 ## Dataset
 ## Experiment
-## Resilt
+## Result
